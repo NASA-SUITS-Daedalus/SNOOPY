@@ -1,13 +1,15 @@
 const express = require('express');
-const fetch = require('node-fetch'); // Import node-fetch
 const app = express();
 const PORT = 3000;
 
 app.use(express.json()); // Middleware to parse JSON bodies
 
 // Function to send data to HMD
-function sendDataToHMD(data) {
+// Dynamically import node-fetch
+async function sendDataToHMD(data) {
+    const fetch = (await import('node-fetch')).default;
     const hmdUrl = 'http://hmd-device-ip:port/api/receive'; // Replace with your HMD's listening URL
+
     fetch(hmdUrl, {
         method: 'POST',
         headers: {
